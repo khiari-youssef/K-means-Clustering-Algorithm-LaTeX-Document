@@ -1,0 +1,131 @@
+
+\documentclass[a4paper]{letter}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{fancybox}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{titles}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+
+\usepackage[a4paper,vmargin={20mm,20mm},hmargin={20mm,20mm}, includehead,%
+includefoot]{geometry}
+\usepackage{fancybox}
+
+
+\definecolor{americanrose}{rgb}{1.0, 0.01, 0.24}
+\definecolor{antiquefuchsia}{rgb}{0.57, 0.36, 0.51}
+\definecolor{bostonuniversityred}{rgb}{0.8, 0.0, 0.0}
+\definecolor{brightpink}{rgb}{1.0, 0.0, 0.5}
+\definecolor{cadmiumred}{rgb}{0.89, 0.0, 0.13}
+\definecolor{ao}{rgb}{0.0, 0.0, 1.0}
+\definecolor{candyapplered}{rgb}{1.0, 0.03, 0.0}
+\definecolor{coquelicot}{rgb}{1.0, 0.22, 0.0}
+\definecolor{customgreen}{rgb}{0.4, 0.7, 0.1}
+
+\begin{document}
+	\centering
+ \textbf{\Huge Unsupervised learning} \\ \ \\ \texttt{\huge K-means Algorithm \\} 
+ \vspace*{1cm}
+\textsf{\Large Cluster analysis is  fundamental in data science , notably in deep learning , it is used to extract models out of a given dataset , a model is a group of data that share  certain attributes , k-means algorithm helps us achieve this .} \\ \ \\
+\begin{flushleft}
+\textbf{\huge How does it work ?} \\ \ \\ 
+\textsf{\Large let's suppose we have a data set of numeric values , denoted by \\ \ \\ $D = \{ a_1 , a_2 , a_3 , ... , a_n \}$ where $a_i(x_{i1},x_{i2},...,x_{ip})$ is a data point with its cordinates $x_{ij}$ in p-dimensions space vector , \hspace*{1cm} $1\leq i \leq n $ , $ 1\leq j \leq p$ } \\ \ \\
+\textsf{\Large The goal is to build data models by clustering our data set into k partitions  .  each partition must have a centroid . 
+let $P_k(c_k,D_k=\{\emptyset\})$ our k-th partition , $c_k$ and $D_k$ are respectively the centroid and dataset (which is initially empty) . \newline
+First of all , we need to select k centroids for our models , the k-th partition will include the datapoints that minimize its distances with the k-th centroid . to be more accurate , the datapoints will search for the closest centroid and join its partition . \\
+once we get our models , we need to calculate the new position of our centroids , since the initial positions might not lead to a proper and correct clustering . then we iterate with the same  process  until our partitions become stable . stability occurs when an iteration keeps the previous partitions unchanged .\\ \ \\
+  }
+\textbf{\Large We are going to need the following mathematical operators : \\ \ \\ Euclidian distance :  $d(a_i,a_j) = \displaystyle \sqrt{\sum_{k=1}^{p}(x_{jk}-x_{ik})^2}$ \\ \ \\
+Mean value : $\displaystyle avg(a_1,a_2,...,a_n) = \frac{1}{n}\sum_{k=1}^{n}a_k$
+ }
+\clearpage
+\centering
+\texttt{\LARGE  k-means Algorithm  }
+\begin{flushleft}
+\textsf{\\ \ \\ \Large  Environment Variables :} \textsf{\\ \ \\ \large n :  dataset size \\ \ \\ \large k : integer  , \hspace*{0.5cm} //number of clusters $k< n$\\ \ \\
+ $D = \{ a_1 , a_2 , a_3 , ... , a_n \}$ ,  // denotes our dataset \\ \ \\  
+ $a_i(x_{i1} , x_{i2} , x_{i3}  , ... , x_{ip})$ \hspace*{0.3cm} $p \geq 1$
+ \\ \ \\ 
+  $  P_1 , P_2 , P_3 , ... , P_k$ , // our k-clusters to initialize, centroids could be chosen randomly but it won't give the same clusters every time, for efficiency, we use an optimization technique  ( kmeans++) explained below.
+\textsf{\\ \ \\ \Large  Initialization / pre-conditions : \\ \ \\  }
+\textsf{
+	\large for each $1 \leq j \leq k$ \\ \ \\ $P_j = (c_j,\{\emptyset\})$ where $c_j$ is the center of gravity (can be considered as user input for now)}
+ }
+\textsf{\\ \ \\ \Large  Start : \\ \ \\  }
+
+\textsf{\large let isStable = false \\
+	WHILE (isStable = false) DO \\ \ \\
+	 BEGIN loop \\ \large for each $a_i$ where $1 \leq i \leq n$ \\ let minValue = $minDistance(a_i , \{c_1,c_2 , ... ,c_k \})$ \\ let matchingCentroid = $  getMatchingPointByDistance(a_i,minValue) $ \\
+let matchingPartition = $getPartitionByCentroid(matchingCentroid)$ \\
+$addDataPointToCluster(a_i,matchingPartition)$ \\
+END loop \\ \ \\
+isStable = $checkPartitionStability()$ \\ \ \\
+BEGIN loop 
+for each $P_j$ where $1 \leq j \leq k$ \\ 
+$updateCentroid(P_j)$ \\ END loop \\ \ \\
+END WHILE
+ }
+\end{flushleft}
+\end{flushleft}
+\clearpage
+\centering
+\texttt{\Large Kmeans ++ optimization}
+\\ \ \\
+\textsf{the kmeans++ algorithm decides how to pick the initial centroids so that the kmeans algorithm costs less iterations and always produces accurate results. the algorithm will take any point from the dataset as a centroid then calculates the probability that the next point in the dataset will be the next centroid.the highest probabilities will be considered in picking the centroids.} \\ \ \\
+\hspace*{1cm}
+\begin{center}
+\texttt{\huge Visualization of the data input}
+\end{center}
+\hspace*{1.5cm}
+\begin{center}
+\begin{tikzpicture}
+	\begin{axis}[%
+	xlabel = x,
+	ylabel = y,
+	scatter/classes={%
+		a={mark=square*,blue},%
+		b={mark=triangle*,red},%
+		c={mark=o,draw=black}}]
+	\addplot[scatter,only marks,%
+		scatter src=explicit symbolic]%
+	table[meta=cluster]
+	{data.dat};
+	\end{axis}
+\end{tikzpicture}
+\end{center}
+\hspace*{1.5cm}
+\begin{center}
+\texttt{\huge Visualization of the data output}
+\end{center}
+\hspace*{1.5cm}
+\begin{center}
+\begin{tikzpicture}
+	\begin{axis}[%
+	xlabel = x,
+	ylabel = y,
+	scatter/classes={%
+	c1={mark=halfcircle,blue},%
+		c2={mark=halfcircle,red},%
+		c3={mark=halfcircle,draw=black}}]
+	\addplot[scatter,only marks,%
+		scatter src=explicit symbolic]%
+	table[meta=cluster]
+	{data.dat};
+	\end{axis}
+\end{tikzpicture}
+\end{center}
+
+
+
+\end{document}
